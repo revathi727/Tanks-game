@@ -16,6 +16,11 @@ Pix = pygame.PixelArray(gameDisplay)
 
 Pix[10][10] = green
 
+pygame.draw.line(gameDisplay, red, (200, 300), (500, 500), 5)
+pygame.draw.circle(gameDisplay, red, (200, 200), 100)
+pygame.draw.rect(gameDisplay, green, (150, 150, 200, 100))
+pygame.draw.polygon(gameDisplay, white, ((140,5),(200,16),(88,333),(600,222),(555,222)))
+
 while True:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
