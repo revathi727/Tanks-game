@@ -51,6 +51,25 @@ def pause():
 
         clock.tick(5)
 
+def text_objects(text, color, size):
+    if size == "small":
+        textSurface = smallfont.render(text, True, color)
+    elif size == "medium":
+        textSurface = medfont.render(text, True, color)
+    elif size == "large":
+        textSurface = largefont.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
+
+def message_to_screen(msg, color, y_displace=0, size="small"):
+    textSurf, textRect = text_objects(msg, color, size)
+    textRect.center = (display_width/2), (display_height/2)+y_displace
+    gameDisplay.blit(textSurf, textRect)
+
+def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size="small"):
+    textSurf, textRect = text_objects(msg, color, size)
+    textRect.center = (buttonx + (buttonwidth/2)), (buttony + (buttonheight/2))
+    gameDisplay.blit(textSurf, textRect)
 
 def score(score):
     text = smallfont.render("Score: "+str(score), True, black)
@@ -81,23 +100,13 @@ def game_intro():
         pygame.draw.rect(gameDisplay, yellow, (350, 500, 100, 50))
         pygame.draw.rect(gameDisplay, red, (550, 500, 100, 50))
         
+        text_to_button("play", black, 150, 500, 100, 50)
+        text_to_button("controls", black, 350, 500, 100, 50)
+        text_to_button("quit", black, 550, 500, 100, 50)
+
         pygame.display.update()
         clock.tick(15)
 
-def text_objects(text, color, size):
-    if size == "small":
-        textSurface = smallfont.render(text, True, color)
-    elif size == "medium":
-        textSurface = medfont.render(text, True, color)
-    elif size == "large":
-        textSurface = largefont.render(text, True, color)
-
-    return textSurface, textSurface.get_rect()
-
-def message_to_screen(msg, color, y_displace=0, size="small"):
-    textSurf, textRect = text_objects(msg, color, size)
-    textRect.center = (display_width/2), (display_height/2)+y_displace
-    gameDisplay.blit(textSurf, textRect)
 
 def gameLoop():
     gameExit = False
