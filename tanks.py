@@ -74,11 +74,14 @@ def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size
     textRect.center = (buttonx + (buttonwidth/2)), (buttony + (buttonheight/2))
     gameDisplay.blit(textSurf, textRect)
 
-def button(text, x, y, width, height, inactive_color, active_color):
+def button(text, x, y, width, height, inactive_color, active_color, action = None):
     cur = pygame.mouse.get_pos()
-
+    click = pygame.mouse.get_pressed()
+    #print(click)
     if x+width>cur[0]>x and y+height>cur[1]>y:
         pygame.draw.rect(gameDisplay, active_color, (x, y, width, height))
+        if click[0] == 1:
+            print("Button clicked!")
     else:
         pygame.draw.rect(gameDisplay, inactive_color, (x, y, width, height))
     
