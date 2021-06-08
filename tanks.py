@@ -156,6 +156,9 @@ def score(score):
     text = smallfont.render("Score: "+str(score), True, black)
     gameDisplay.blit(text, [0, 0])
 
+def barrier():
+    xlocation = (display_width/2) + random.randint(-0.2*display_width, 0.2*display_width)
+
 def game_intro():
     intro = True
     while intro:
@@ -246,6 +249,12 @@ def gameLoop():
 
         mainTankX += tankMove
         currentTurPos += changeTur
+
+        if currentTurPos > 8:
+            currentTurPos = 8
+        elif currentTurPos < 0:
+            currentTurPos = 0
+
         tank(mainTankX, mainTankY, currentTurPos)
 
         pygame.display.update()
