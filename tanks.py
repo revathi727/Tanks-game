@@ -109,6 +109,8 @@ def tank(x, y, turPos):
         pygame.draw.circle(gameDisplay, black, (x-startX, y+20), wheelWidth)
         startX -= 5
 
+    return possibleTurrets[turPos]
+
 def game_controls():
     gcont = True
     while gcont:
@@ -159,6 +161,14 @@ def score(score):
 def barrier(xlocation, randomHeight, barrier_width):
     pygame.draw.rect(gameDisplay, black, [xlocation, display_height-randomHeight, barrier_width, randomHeight])
 
+def fireShell(xy):
+    fire = True
+
+    startingShell = xy
+    print("FIRE!")
+    while fire:
+        fire = False
+
 def game_intro():
     intro = True
     while intro:
@@ -208,6 +218,9 @@ def gameLoop():
 
 
     while not gameExit:
+        gameDisplay.fill(white)
+        gun = tank(mainTankX, mainTankY, currentTurPos)
+
         if gameOver == True:
             message_to_screen("Game over", red, y_displace=-50, size="large")
             message_to_screen("Press C to play again or Q to Quit", black, 50, size="medium")
@@ -244,14 +257,13 @@ def gameLoop():
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     quit()
+                elif event.key == pygame.K_SPACE:
+                    fireShell(gun)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     tankMove = 0
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                     changeTur = 0
-
-
-        gameDisplay.fill(white)
 
         mainTankX += tankMove
         currentTurPos += changeTur
@@ -264,7 +276,6 @@ def gameLoop():
         if mainTankX - (tankWidth/2) < xlocation+barrier_width:
             mainTankX += 5
 
-        tank(mainTankX, mainTankY, currentTurPos)
         barrier(xlocation, randomHeight, barrier_width)
         pygame.display.update()
 
