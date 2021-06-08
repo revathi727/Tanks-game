@@ -74,6 +74,28 @@ def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size
     textRect.center = (buttonx + (buttonwidth/2)), (buttony + (buttonheight/2))
     gameDisplay.blit(textSurf, textRect)
 
+def game_controls():
+    gcont = True
+    while gcont:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        message_to_screen("Controls", green, -100, "large")
+        message_to_screen("Fire: Spacebar", black, -30)
+        message_to_screen("Move Turret: Up and Down arrows", black, 10)
+        message_to_screen("Move Tanks: Left and Right arrows", black, 50)
+        message_to_screen("Pause: P", black, 90)
+        
+        button("play", 150, 500, 100, 50, green, light_green, "play")
+        button("main", 350, 500, 100, 50, yellow, light_yellow, "main")
+        button("quit", 550, 500, 100, 50, red, light_red, "quit")
+
+        pygame.display.update()
+        clock.tick(15)
+
 def button(text, x, y, width, height, inactive_color, active_color, action = None):
     cur = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -85,9 +107,11 @@ def button(text, x, y, width, height, inactive_color, active_color, action = Non
                 pygame.quit()
                 quit()
             elif action == "controls":
-                pass
+                game_controls()
             elif action == "play":
                 gameLoop()
+            elif action == "main":
+                game_intro()
     else:
         pygame.draw.rect(gameDisplay, inactive_color, (x, y, width, height))
     
@@ -117,16 +141,6 @@ def game_intro():
         message_to_screen("the enemy tank before they destroy you.", black, 10)
         message_to_screen("The more enemies you destry the harder they get.", black, 50)
         #message_to_screen("Press C to play, P to pause or Q to quit", black, 180)
-        
-
-        # cur = pygame.mouse.get_pos()
-
-        # if 150+100>cur[0]>150 and 500+50>cur[1]>500:
-        #     pygame.draw.rect(gameDisplay, light_green, (150, 500, 100, 50))
-        # else:
-        #     pygame.draw.rect(gameDisplay, green, (150, 500, 100, 50))
-        # pygame.draw.rect(gameDisplay, yellow, (350, 500, 100, 50))
-        # pygame.draw.rect(gameDisplay, red, (550, 500, 100, 50))
         
         button("play", 150, 500, 100, 50, green, light_green, "play")
         button("controls", 350, 500, 100, 50, yellow, light_yellow, "controls")
