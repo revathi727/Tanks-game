@@ -156,10 +156,7 @@ def score(score):
     text = smallfont.render("Score: "+str(score), True, black)
     gameDisplay.blit(text, [0, 0])
 
-def barrier():
-    xlocation = (display_width/2) + random.randint(-0.2*display_width, 0.2*display_width)
-    randomHeight = random.randrange(display_height*0.1, display_height*0.6)
-
+def barrier(xlocation, randomHeight):
     pygame.draw.rect(gameDisplay, black, [xlocation, display_height-randomHeight, 50, randomHeight])
 
 def game_intro():
@@ -203,6 +200,10 @@ def gameLoop():
 
     currentTurPos = 0
     changeTur = 0
+
+    xlocation = (display_width/2) + random.randint(-0.2*display_width, 0.2*display_width)
+    randomHeight = random.randrange(display_height*0.1, display_height*0.6)
+
 
     while not gameExit:
         if gameOver == True:
@@ -259,8 +260,7 @@ def gameLoop():
             currentTurPos = 0
 
         tank(mainTankX, mainTankY, currentTurPos)
-        for x in range(25):
-            barrier()
+        barrier(xlocation, randomHeight)
         pygame.display.update()
 
         clock.tick(FPS)
