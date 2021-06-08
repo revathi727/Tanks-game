@@ -6,10 +6,12 @@ pygame.init()
 
 white = (255,255,255)
 black = (0,0,0)
-red = (255,0,0)
+red = (200,0,0)
 yellow = (200,200,0)
 green = (34, 177, 76)
 light_green = (0, 255, 0)
+light_red = (255,0,0)
+light_yellow = (255,255,0)
 
 display_width = 800
 display_height = 600
@@ -72,6 +74,16 @@ def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size
     textRect.center = (buttonx + (buttonwidth/2)), (buttony + (buttonheight/2))
     gameDisplay.blit(textSurf, textRect)
 
+def button(text, x, y, width, height, inactive_color, active_color):
+    cur = pygame.mouse.get_pos()
+
+    if x+width>cur[0]>x and y+height>cur[1]>y:
+        pygame.draw.rect(gameDisplay, active_color, (x, y, width, height))
+    else:
+        pygame.draw.rect(gameDisplay, inactive_color, (x, y, width, height))
+    
+    text_to_button(text, black, x, y, width, height)
+
 def score(score):
     text = smallfont.render("Score: "+str(score), True, black)
     gameDisplay.blit(text, [0, 0])
@@ -98,18 +110,18 @@ def game_intro():
         #message_to_screen("Press C to play, P to pause or Q to quit", black, 180)
         
 
-        cur = pygame.mouse.get_pos()
+        # cur = pygame.mouse.get_pos()
 
-        if 150+100>cur[0]>150 and 500+50>cur[1]>500:
-            pygame.draw.rect(gameDisplay, light_green, (150, 500, 100, 50))
-        else:
-            pygame.draw.rect(gameDisplay, green, (150, 500, 100, 50))
-        pygame.draw.rect(gameDisplay, yellow, (350, 500, 100, 50))
-        pygame.draw.rect(gameDisplay, red, (550, 500, 100, 50))
+        # if 150+100>cur[0]>150 and 500+50>cur[1]>500:
+        #     pygame.draw.rect(gameDisplay, light_green, (150, 500, 100, 50))
+        # else:
+        #     pygame.draw.rect(gameDisplay, green, (150, 500, 100, 50))
+        # pygame.draw.rect(gameDisplay, yellow, (350, 500, 100, 50))
+        # pygame.draw.rect(gameDisplay, red, (550, 500, 100, 50))
         
-        text_to_button("play", black, 150, 500, 100, 50)
-        text_to_button("controls", black, 350, 500, 100, 50)
-        text_to_button("quit", black, 550, 500, 100, 50)
+        button("play", 150, 500, 100, 50, green, light_green)
+        button("controls", 350, 500, 100, 50, yellow, light_yellow)
+        button("quit", 550, 500, 100, 50, red, light_red)
 
         pygame.display.update()
         clock.tick(15)
@@ -155,6 +167,9 @@ def gameLoop():
                     pass
                 elif event.key == pygame.K_p:
                     pause()
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
 
         gameDisplay.fill(white)
 
