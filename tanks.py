@@ -161,13 +161,24 @@ def score(score):
 def barrier(xlocation, randomHeight, barrier_width):
     pygame.draw.rect(gameDisplay, black, [xlocation, display_height-randomHeight, barrier_width, randomHeight])
 
-def fireShell(xy):
+def fireShell(xy, tankx, tanky, turPos):
     fire = True
 
-    startingShell = xy
-    print("FIRE!")
+    startingShell = list(xy)
+    print("FIRE!", xy)
     while fire:
-        fire = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        print(startingShell[0], startingShell[1])
+        pygame.draw.circle(gameDisplay, red, (startingShell[0], startingShell[1]), 5)
+
+        startingShell[0] -= 5
+
+        pygame.display.update()
+        clock.tick(5)
 
 def game_intro():
     intro = True
@@ -258,7 +269,8 @@ def gameLoop():
                     pygame.quit()
                     quit()
                 elif event.key == pygame.K_SPACE:
-                    fireShell(gun)
+                    fireShell(gun, mainTankX, mainTankY, currentTurPos)
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     tankMove = 0
