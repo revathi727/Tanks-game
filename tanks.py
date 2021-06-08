@@ -8,7 +8,8 @@ white = (255,255,255)
 black = (0,0,0)
 red = (255,0,0)
 yellow = (200,200,0)
-green = (0,155,0)
+green = (34, 177, 76)
+light_green = (0, 255, 0)
 
 display_width = 800
 display_height = 600
@@ -96,7 +97,13 @@ def game_intro():
         message_to_screen("The more enemies you destry the harder they get.", black, 50)
         #message_to_screen("Press C to play, P to pause or Q to quit", black, 180)
         
-        pygame.draw.rect(gameDisplay, green, (150, 500, 100, 50))
+
+        cur = pygame.mouse.get_pos()
+
+        if 150+100>cur[0]>150 and 500+50>cur[1]>500:
+            pygame.draw.rect(gameDisplay, light_green, (150, 500, 100, 50))
+        else:
+            pygame.draw.rect(gameDisplay, green, (150, 500, 100, 50))
         pygame.draw.rect(gameDisplay, yellow, (350, 500, 100, 50))
         pygame.draw.rect(gameDisplay, red, (550, 500, 100, 50))
         
