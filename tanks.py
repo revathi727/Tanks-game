@@ -27,6 +27,9 @@ pygame.display.set_caption('Tanks')
 
 clock = pygame.time.Clock()
 
+mainTankX = display_width * 0.9
+mainTankY = display_height * 0.9
+
 smallfont = pygame.font.SysFont("comicsansms", 25)
 medfont = pygame.font.SysFont("comicsansms", 50)
 largefont = pygame.font.SysFont("comicsansms", 80)
@@ -73,6 +76,9 @@ def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size
     textSurf, textRect = text_objects(msg, color, size)
     textRect.center = (buttonx + (buttonwidth/2)), (buttony + (buttonheight/2))
     gameDisplay.blit(textSurf, textRect)
+
+def tank(x, y):
+    pygame.draw.circle(gameDisplay, black, (int(x), int(y)), 20)
 
 def game_controls():
     gcont = True
@@ -195,6 +201,8 @@ def gameLoop():
                     quit()
 
         gameDisplay.fill(white)
+
+        tank(mainTankX, mainTankY)
 
         pygame.display.update()
 
