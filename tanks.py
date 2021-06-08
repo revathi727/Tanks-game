@@ -2,6 +2,8 @@ import pygame
 import time
 import random
 
+from pygame.constants import K_RIGHT
+
 pygame.init()
 
 white = (255,255,255)
@@ -218,6 +220,9 @@ def gameLoop():
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     quit()
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT or event.key == K_RIGHT:
+                    tankMove = 0
 
         gameDisplay.fill(white)
 
