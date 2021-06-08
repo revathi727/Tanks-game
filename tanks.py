@@ -27,10 +27,6 @@ pygame.display.set_caption('Tanks')
 
 clock = pygame.time.Clock()
 
-
-mainTankX = display_width * 0.9
-mainTankY = display_height * 0.9
-
 tankWidth = 40
 tankHeight = 20
 
@@ -181,6 +177,10 @@ def gameLoop():
 
     FPS = 15
 
+    mainTankX = display_width * 0.9
+    mainTankY = display_height * 0.9
+    tankMove = 0
+
     while not gameExit:
         if gameOver == True:
             message_to_screen("Game over", red, y_displace=-50, size="large")
@@ -206,9 +206,9 @@ def gameLoop():
                 gameExit = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    pass
+                    tankMove = -5
                 elif event.key == pygame.K_RIGHT:
-                    pass
+                    tankMove = 5
                 elif event.key == pygame.K_UP:
                     pass
                 elif event.key == pygame.K_DOWN:
@@ -221,6 +221,7 @@ def gameLoop():
 
         gameDisplay.fill(white)
 
+        mainTankX += tankMove
         tank(mainTankX, mainTankY)
 
         pygame.display.update()
