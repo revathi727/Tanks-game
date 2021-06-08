@@ -82,7 +82,7 @@ def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size
     textRect.center = (buttonx + (buttonwidth/2)), (buttony + (buttonheight/2))
     gameDisplay.blit(textSurf, textRect)
 
-def tank(x, y):
+def tank(x, y, turPos):
     x = int(x)
     y = int(y)
 
@@ -100,15 +100,7 @@ def tank(x, y):
     pygame.draw.circle(gameDisplay, black, (x, y), int(tankHeight/2))
     pygame.draw.rect(gameDisplay, black, (x-tankHeight, y, tankWidth, tankHeight))
 
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[0], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[1], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[2], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[3], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[4], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[5], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[6], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[7], turretWidth)
-    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[8], turretWidth)
+    pygame.draw.line(gameDisplay, black, (x,y), possibleTurrets[turPos], turretWidth)
 
     # pygame.draw.circle(gameDisplay, black, (x-15, y+20), wheelWidth)
     # pygame.draw.circle(gameDisplay, black, (x-10, y+20), wheelWidth)
@@ -203,6 +195,9 @@ def gameLoop():
     mainTankY = display_height * 0.9
     tankMove = 0
 
+    currentTurPos = 0
+    changeTur = 0
+
     while not gameExit:
         if gameOver == True:
             message_to_screen("Game over", red, y_displace=-50, size="large")
@@ -232,22 +227,26 @@ def gameLoop():
                 elif event.key == pygame.K_RIGHT:
                     tankMove = 5
                 elif event.key == pygame.K_UP:
-                    pass
+                    changeTur = 1
                 elif event.key == pygame.K_DOWN:
-                    pass
+                    changeTur = -1
                 elif event.key == pygame.K_p:
                     pause()
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     quit()
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == K_RIGHT:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     tankMove = 0
+                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                    changeTur = 0
+
 
         gameDisplay.fill(white)
 
         mainTankX += tankMove
-        tank(mainTankX, mainTankY)
+        currentTurPos += changeTur
+        tank(mainTankX, mainTankY, currentTurPos)
 
         pygame.display.update()
 
