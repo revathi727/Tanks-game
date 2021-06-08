@@ -156,8 +156,8 @@ def score(score):
     text = smallfont.render("Score: "+str(score), True, black)
     gameDisplay.blit(text, [0, 0])
 
-def barrier(xlocation, randomHeight):
-    pygame.draw.rect(gameDisplay, black, [xlocation, display_height-randomHeight, 50, randomHeight])
+def barrier(xlocation, randomHeight, barrier_width):
+    pygame.draw.rect(gameDisplay, black, [xlocation, display_height-randomHeight, barrier_width, randomHeight])
 
 def game_intro():
     intro = True
@@ -193,6 +193,8 @@ def gameLoop():
     gameOver = False
 
     FPS = 15
+
+    barrier_width = 50
 
     mainTankX = display_width * 0.9
     mainTankY = display_height * 0.9
@@ -259,8 +261,11 @@ def gameLoop():
         elif currentTurPos < 0:
             currentTurPos = 0
 
+        if mainTankX - (tankWidth/2) < xlocation+barrier_width:
+            mainTankX += 5
+
         tank(mainTankX, mainTankY, currentTurPos)
-        barrier(xlocation, randomHeight)
+        barrier(xlocation, randomHeight, barrier_width)
         pygame.display.update()
 
         clock.tick(FPS)
