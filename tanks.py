@@ -27,8 +27,12 @@ pygame.display.set_caption('Tanks')
 
 clock = pygame.time.Clock()
 
+
 mainTankX = display_width * 0.9
 mainTankY = display_height * 0.9
+
+tankWidth = 40
+tankHeight = 20
 
 smallfont = pygame.font.SysFont("comicsansms", 25)
 medfont = pygame.font.SysFont("comicsansms", 50)
@@ -78,7 +82,10 @@ def text_to_button(msg, color, buttonx, buttony, buttonwidth, buttonheight, size
     gameDisplay.blit(textSurf, textRect)
 
 def tank(x, y):
-    pygame.draw.circle(gameDisplay, black, (int(x), int(y)), 20)
+    x = int(x)
+    y = int(y)
+    pygame.draw.circle(gameDisplay, black, (x, y), int(tankHeight/2))
+    pygame.draw.rect(gameDisplay, black, (x-tankHeight, y, tankWidth, tankHeight))
 
 def game_controls():
     gcont = True
@@ -145,7 +152,7 @@ def game_intro():
         message_to_screen("Welcome to Tanks", green, -100, "large")
         message_to_screen("The objective is to shoot and destroy", black, -30)
         message_to_screen("the enemy tank before they destroy you.", black, 10)
-        message_to_screen("The more enemies you destry the harder they get.", black, 50)
+        message_to_screen("The more enemies you destroy the harder they get.", black, 50)
         #message_to_screen("Press C to play, P to pause or Q to quit", black, 180)
         
         button("play", 150, 500, 100, 50, green, light_green, "play")
