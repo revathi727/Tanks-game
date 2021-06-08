@@ -80,8 +80,14 @@ def button(text, x, y, width, height, inactive_color, active_color, action = Non
     #print(click)
     if x+width>cur[0]>x and y+height>cur[1]>y:
         pygame.draw.rect(gameDisplay, active_color, (x, y, width, height))
-        if click[0] == 1:
-            print("Button clicked!")
+        if click[0] == 1 and action != None:
+            if action == "quit":
+                pygame.quit()
+                quit()
+            elif action == "controls":
+                pass
+            elif action == "play":
+                gameLoop()
     else:
         pygame.draw.rect(gameDisplay, inactive_color, (x, y, width, height))
     
@@ -122,9 +128,9 @@ def game_intro():
         # pygame.draw.rect(gameDisplay, yellow, (350, 500, 100, 50))
         # pygame.draw.rect(gameDisplay, red, (550, 500, 100, 50))
         
-        button("play", 150, 500, 100, 50, green, light_green)
-        button("controls", 350, 500, 100, 50, yellow, light_yellow)
-        button("quit", 550, 500, 100, 50, red, light_red)
+        button("play", 150, 500, 100, 50, green, light_green, "play")
+        button("controls", 350, 500, 100, 50, yellow, light_yellow, "controls")
+        button("quit", 550, 500, 100, 50, red, light_red, "quit")
 
         pygame.display.update()
         clock.tick(15)
