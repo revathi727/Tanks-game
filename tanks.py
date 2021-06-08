@@ -34,6 +34,9 @@ mainTankY = display_height * 0.9
 tankWidth = 40
 tankHeight = 20
 
+turretWidth = 5
+wheelWidth = 5
+
 smallfont = pygame.font.SysFont("comicsansms", 25)
 medfont = pygame.font.SysFont("comicsansms", 50)
 largefont = pygame.font.SysFont("comicsansms", 80)
@@ -86,6 +89,15 @@ def tank(x, y):
     y = int(y)
     pygame.draw.circle(gameDisplay, black, (x, y), int(tankHeight/2))
     pygame.draw.rect(gameDisplay, black, (x-tankHeight, y, tankWidth, tankHeight))
+
+    pygame.draw.line(gameDisplay, black, (x,y), (x-10, y-20), turretWidth)
+
+    # pygame.draw.circle(gameDisplay, black, (x-15, y+20), wheelWidth)
+    # pygame.draw.circle(gameDisplay, black, (x-10, y+20), wheelWidth)
+    startX = 15
+    for i in range(7):
+        pygame.draw.circle(gameDisplay, black, (x-startX, y+20), wheelWidth)
+        startX -= 5
 
 def game_controls():
     gcont = True
