@@ -117,15 +117,15 @@ def enemy_tank(x, y, turPos):
     x = int(x)
     y = int(y)
 
-    possibleTurrets = [(x-27, y-2),
-                        (x-26, y-5),
-                        (x-25, y-8),
-                        (x-23, y-12),
-                        (x-20, y-14),
-                        (x-18, y-15),
-                        (x-15, y-17),
-                        (x-13, y-19),
-                        (x-11, y-21)
+    possibleTurrets = [(x+27, y-2),
+                        (x+26, y-5),
+                        (x+25, y-8),
+                        (x+23, y-12),
+                        (x+20, y-14),
+                        (x+18, y-15),
+                        (x+15, y-17),
+                        (x+13, y-19),
+                        (x+11, y-21)
                         ]
 
     pygame.draw.circle(gameDisplay, black, (x, y), int(tankHeight/2))
@@ -219,21 +219,24 @@ def explosion(x, y, size=50):
 
         explode = False
 
-def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight):
+def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight, tank="player"):
     fire = True
 
     startingShell = list(xy)
     print("FIRE!", xy)
     while fire:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or event.key == pygame.K_q:
+            if event.type == pygame.QUIT:# or event.key == pygame.K_q:
                 pygame.quit()
                 quit()
 
         print(startingShell[0], startingShell[1])
         pygame.draw.circle(gameDisplay, red, (startingShell[0], startingShell[1]), 5)
 
-        startingShell[0] -= (12 - turPos)*2
+        if tank == "enemy":
+            startingShell[0] += (12 - turPos)*2
+        else:
+            startingShell[0] -= (12 - turPos)*2
         # y = x**2
         startingShell[1] += int(((startingShell[0]-xy[0])*0.015/(gun_power/50))**2 - (turPos+turPos/(12-turPos)))
 
@@ -361,6 +364,7 @@ def gameLoop():
                     quit()
                 elif event.key == pygame.K_SPACE:
                     fireShell(gun, mainTankX, mainTankY, currentTurPos, fire_power, xlocation, barrier_width, randomHeight)
+                    fireShell(enemy_gun, enemyTankX, enemyTankY, 8, 50, xlocation, barrier_width, randomHeight, tank="enemy")
                 elif event.key == pygame.K_a:
                     power_change = -1
                 elif event.key == pygame.K_d:
@@ -387,7 +391,7 @@ def gameLoop():
 
         gameDisplay.fill(white)
         gun = tank(mainTankX, mainTankY, currentTurPos)
-        enemy_gun = enemy_tank(enemyTankX, enemyTankY, currentTurPos)
+        enemy_gun = enemy_tank(enemyTankX, enemyTankY, 8)
 
         fire_power += power_change
 
