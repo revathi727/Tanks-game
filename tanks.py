@@ -394,6 +394,45 @@ def game_intro():
         pygame.display.update()
         clock.tick(15)
 
+def game_over():
+    game_over = False
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        message_to_screen("Game Over", green, -100, "large")
+        message_to_screen("You died!", black, -30)
+        
+        button("play again", 150, 500, 150, 50, green, light_green, "play")
+        button("controls", 350, 500, 100, 50, yellow, light_yellow, "controls")
+        button("quit", 550, 500, 100, 50, red, light_red, "quit")
+
+        pygame.display.update()
+        clock.tick(15)
+
+def you_win():
+    win = False
+    while not win:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        message_to_screen("You Won!", green, -100, "large")
+        message_to_screen("Congratulations", black, -30)
+        
+        button("play again", 150, 500, 150, 50, green, light_green, "play")
+        button("controls", 350, 500, 100, 50, yellow, light_yellow, "controls")
+        button("quit", 550, 500, 100, 50, red, light_red, "quit")
+
+        pygame.display.update()
+        clock.tick(15)
+
+
 def health_bars(player_health, enemy_health):
     if player_health > 75:
         player_health_color = green
@@ -518,7 +557,11 @@ def gameLoop():
         barrier(xlocation, randomHeight, barrier_width)
         gameDisplay.fill(green, rect=[0, display_height-ground_height, display_width, ground_height])
         pygame.display.update()
-
+        
+        if player_health < 1:
+            game_over()
+        elif enemy_health < 1:
+            you_win()
         clock.tick(FPS)
 
     pygame.quit()
