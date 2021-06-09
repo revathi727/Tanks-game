@@ -219,7 +219,9 @@ def explosion(x, y, size=50):
 
         explode = False
 
-def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight):
+def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight, enemyTankX, enemyTankY):
+    
+    damage = 0
     fire = True
 
     startingShell = list(xy)
@@ -242,6 +244,9 @@ def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, ran
             hit_x = int((startingShell[0]* display_height-ground_height)/startingShell[1])
             hit_y = int(display_height-ground_height)
             print("Impact:", hit_x,hit_y)
+            if enemyTankX + 20 > hit_x > enemyTankX - 20:
+                print("HIT target!")
+                damage = 25
             explosion(hit_x, hit_y)
             fire = False
 
@@ -261,9 +266,11 @@ def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, ran
 
         pygame.display.update()
         clock.tick(60)
+    return damage
 
 def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight, ptankx, ptanky):
 
+    damage = 0
     currentPower = 1
     power_found = False
     while not power_found:
@@ -330,6 +337,9 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
             hit_x = int((startingShell[0]* display_height-ground_height)/startingShell[1])
             hit_y = int(display_height-ground_height)
             print("Impact:", hit_x,hit_y)
+            if ptankx + 15 > hit_x > ptankx - 15:
+                print("HIT target!")
+                damage = 25
             explosion(hit_x, hit_y)
             fire = False
 
@@ -349,6 +359,7 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
 
         pygame.display.update()
         clock.tick(60)
+    return damage
 
 
 def power(level):
@@ -467,8 +478,10 @@ def gameLoop():
                     pygame.quit()
                     quit()
                 elif event.key == pygame.K_SPACE:
-                    fireShell(gun, mainTankX, mainTankY, currentTurPos, fire_power, xlocation, barrier_width, randomHeight)
-                    e_fireShell(enemy_gun, enemyTankX, enemyTankY, 8, 50, xlocation, barrier_width, randomHeight, mainTankX, mainTankY)
+                    damage = fireShell(gun, mainTankX, mainTankY, currentTurPos, fire_power, xlocation, barrier_width, randomHeight, enemyTankX, enemyTankY)
+                    enemy_health -= damage
+                    damage = e_fireShell(enemy_gun, enemyTankX, enemyTankY, 8, 50, xlocation, barrier_width, randomHeight, mainTankX, mainTankY)
+                    player_health -= damage
                 elif event.key == pygame.K_a:
                     power_change = -1
                 elif event.key == pygame.K_d:
