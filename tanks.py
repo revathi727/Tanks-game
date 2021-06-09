@@ -270,7 +270,7 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
         currentPower += 1
         if currentPower > 100:
             power_found = True
-        print(currentPower)
+        #print(currentPower)
 
         fire = True
         startingShell = list(xy)
@@ -309,7 +309,7 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
 
     fire = True
     startingShell = list(xy)
-    print("FIRE!", xy)
+    #print("FIRE!", xy)
 
     while fire:
         for event in pygame.event.get():
@@ -317,7 +317,7 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
                 pygame.quit()
                 quit()
 
-        print(startingShell[0], startingShell[1])
+        #print(startingShell[0], startingShell[1])
         pygame.draw.circle(gameDisplay, red, (startingShell[0], startingShell[1]), 5)
 
         startingShell[0] += (12 - turPos)*2
@@ -383,12 +383,31 @@ def game_intro():
         pygame.display.update()
         clock.tick(15)
 
+def health_bars(player_health, enemy_health):
+    if player_health > 75:
+        player_health_color = green
+    elif player_health > 50:
+        player_health_color = yellow
+    else:
+        player_health_color = red
+    if enemy_health > 75:
+        enemy_health_color = green
+    elif enemy_health > 50:
+        enemy_health_color = yellow
+    else:
+        enemy_health_color = red
+    
+    pygame.draw.rect(gameDisplay, player_health_color, (680, 25, player_health, 25))
+    pygame.draw.rect(gameDisplay, enemy_health_color, (20, 25, enemy_health, 25))
 
 def gameLoop():
     gameExit = False
     gameOver = False
 
     FPS = 15
+
+    player_health = 100
+    enemy_health = 100
 
     barrier_width = 50
 
@@ -475,6 +494,7 @@ def gameLoop():
             mainTankX += 5
 
         gameDisplay.fill(white)
+        health_bars(player_health, enemy_health)
         gun = tank(mainTankX, mainTankY, currentTurPos)
         enemy_gun = enemy_tank(enemyTankX, enemyTankY, 8)
 
