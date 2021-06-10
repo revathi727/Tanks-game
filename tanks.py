@@ -330,7 +330,11 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
         startingShell[0] += (12 - turPos)*2
 
         # y = x**2
-        startingShell[1] += int(((startingShell[0]-xy[0])*0.015/(currentPower/50))**2 - (turPos+turPos/(12-turPos)))
+
+        gun_power = random.randrange(int(currentPower*0.9), int(currentPower*1.1))
+        
+
+        startingShell[1] += int(((startingShell[0]-xy[0])*0.015/(gun_power/50))**2 - (turPos+turPos/(12-turPos)))
 
         if startingShell[1] > display_height-ground_height:
             print("Last Shell:", startingShell[0], startingShell[1])
