@@ -18,6 +18,12 @@ light_yellow = (255,255,0)
 display_width = 800
 display_height = 600
 
+fire_sound = pygame.mixer.Sound("fire.mp3")
+explosion_sound = pygame.mixer.Sound("explosion.mp3")
+
+# pygame.mixer.music.load("fire.mp3")
+# pygame.mixer.music.play(-1)
+
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('Tanks')
 
@@ -194,6 +200,7 @@ def barrier(xlocation, randomHeight, barrier_width):
     pygame.draw.rect(gameDisplay, black, [xlocation, display_height-randomHeight, barrier_width, randomHeight])
 
 def explosion(x, y, size=50):
+    pygame.mixer.Sound.play(explosion_sound)
     explode = True
 
     while explode:
@@ -220,7 +227,7 @@ def explosion(x, y, size=50):
         explode = False
 
 def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight, enemyTankX, enemyTankY):
-    
+    pygame.mixer.Sound.play(fire_sound)
     damage = 0
     fire = True
 
@@ -278,7 +285,7 @@ def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, ran
     return damage
 
 def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, randomHeight, ptankx, ptanky):
-
+    pygame.mixer.Sound.play(fire_sound)
     damage = 0
     currentPower = 1
     power_found = False
