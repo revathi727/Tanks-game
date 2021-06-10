@@ -244,9 +244,18 @@ def fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, ran
             hit_x = int((startingShell[0]* display_height-ground_height)/startingShell[1])
             hit_y = int(display_height-ground_height)
             print("Impact:", hit_x,hit_y)
-            if enemyTankX + 20 > hit_x > enemyTankX - 20:
-                print("HIT target!")
+            if enemyTankX + 10 > hit_x > enemyTankX - 10:
+                print("Critical Hit!")
                 damage = 25
+            elif enemyTankX + 15 > hit_x > enemyTankX - 15:
+                print("Hard Hit!")
+                damage = 18
+            elif enemyTankX + 25 > hit_x > enemyTankX - 25:
+                print("Medium Hit!")
+                damage = 10
+            elif enemyTankX + 35 > hit_x > enemyTankX - 35:
+                print("Light Hit!")
+                damage = 5
             explosion(hit_x, hit_y)
             fire = False
 
@@ -341,9 +350,18 @@ def e_fireShell(xy, tankx, tanky, turPos, gun_power, xlocation, barrier_width, r
             hit_x = int((startingShell[0]* display_height-ground_height)/startingShell[1])
             hit_y = int(display_height-ground_height)
             print("Impact:", hit_x,hit_y)
-            if ptankx + 15 > hit_x > ptankx - 15:
-                print("HIT target!")
+            if ptankx + 10 > hit_x > ptankx - 10:
+                print("Critical Hit!")
                 damage = 25
+            elif ptankx + 15 > hit_x > ptankx - 15:
+                print("Hard Hit!")
+                damage = 18
+            elif ptankx + 25 > hit_x > ptankx - 25:
+                print("Medium Hit!")
+                damage = 10
+            elif ptankx + 35 > hit_x > ptankx - 35:
+                print("Light Hit!")
+                damage = 5
             explosion(hit_x, hit_y)
             fire = False
 
